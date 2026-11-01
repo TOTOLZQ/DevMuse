@@ -1,0 +1,55 @@
+name: Build unsigned IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show toolchain
+        run: |
+          xcodebuild -version
+          xcode-select -p
+          xcodebuild -list -project DevMuse.xcodeproj
+
+      - name: Build unsigned app
+        run: |
+          set -eo pipefail
+          xcodebuild \
+            -project DevMuse.xcodeproj \
+            -target DevMuse \
+            -configuration Release \
+            -sdk iphoneos \
+            -arch arm64 \
+            ONLY_ACTIVE_ARCH=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            CONFIGURATION_BUILD_DIR="$PWD/build/Release"
+
+      - name: Package IPA
+        run: |
+          set -eo pipefail
+          rm -rf build/Payload build/MuseDev-unsigned.ipa
+          mkdir -p build/Payload
+          cp -R build/Release/DevMuse.app build/Payload/
+          cd build
+          zip -qry MuseDev-unsigned.ipa Payload
+          unzip -l MuseDev-unsigned.ipa > payload-list.txt
+          head -n 12 payload-list.txt
+          ls -lh MuseDev-unsigned.ipa
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: muse-dev-unsigned-ipa
+          path: build/MuseDev-unsigned.ipa
+          if-no-files-found: error
+          retention-days: 30
