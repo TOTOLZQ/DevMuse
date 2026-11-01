@@ -7,12 +7,20 @@ struct RootView: View {
     var body: some View {
         TabView(selection: $selection) {
             NavigationStack {
+                AgentView()
+            }
+            .tabItem {
+                Label("Agent", systemImage: "sparkles")
+            }
+            .tag(0)
+
+            NavigationStack {
                 CanvasBoardView()
             }
             .tabItem {
                 Label("Board", systemImage: "square.grid.2x2")
             }
-            .tag(0)
+            .tag(1)
 
             NavigationStack {
                 SnippetListView()
@@ -20,7 +28,7 @@ struct RootView: View {
             .tabItem {
                 Label("Vault", systemImage: "curlybraces")
             }
-            .tag(1)
+            .tag(2)
 
             NavigationStack {
                 PromptLabView()
@@ -28,7 +36,7 @@ struct RootView: View {
             .tabItem {
                 Label("Prompts", systemImage: "text.quote")
             }
-            .tag(2)
+            .tag(3)
 
             NavigationStack {
                 SettingsView()
@@ -36,7 +44,7 @@ struct RootView: View {
             .tabItem {
                 Label("Studio", systemImage: "slider.horizontal.3")
             }
-            .tag(3)
+            .tag(4)
         }
     }
 }

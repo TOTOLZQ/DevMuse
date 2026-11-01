@@ -18,6 +18,7 @@
 		AC0000000000000000000009 /* SnippetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000009 /* SnippetDetailView.swift */; };
 		AC000000000000000000000A /* PromptLabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000000000000000000000A /* PromptLabView.swift */; };
 		AC000000000000000000000B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000000000000000000000B /* SettingsView.swift */; };
+		AC000000000000000000000E /* AgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB000000000000000000000E /* AgentView.swift */; };
 		AC000000000000000000000C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB000000000000000000000C /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +35,7 @@
 		AB0000000000000000000009 /* SnippetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetDetailView.swift; sourceTree = "<group>"; };
 		AB000000000000000000000A /* PromptLabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptLabView.swift; sourceTree = "<group>"; };
 		AB000000000000000000000B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		AB000000000000000000000E /* AgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentView.swift; sourceTree = "<group>"; };
 		AB000000000000000000000C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB000000000000000000000D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +81,7 @@
 				AB0000000000000000000009 /* SnippetDetailView.swift */,
 				AB000000000000000000000A /* PromptLabView.swift */,
 				AB000000000000000000000B /* SettingsView.swift */,
+				AB000000000000000000000E /* AgentView.swift */,
 				AB000000000000000000000C /* Assets.xcassets */,
 				AB000000000000000000000D /* Info.plist */,
 			);
@@ -165,6 +168,7 @@
 				AC0000000000000000000009 /* SnippetDetailView.swift in Sources */,
 				AC000000000000000000000A /* PromptLabView.swift in Sources */,
 				AC000000000000000000000B /* SettingsView.swift in Sources */,
+				AC000000000000000000000E /* AgentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

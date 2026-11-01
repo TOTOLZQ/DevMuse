@@ -338,3 +338,82 @@ struct DotGrid: View {
         .accessibilityHidden(true)
     }
 }
+
+enum MuseSpring {
+    static let snappy = Animation.spring(response: 0.28, dampingFraction: 0.82)
+    static let soft = Animation.spring(response: 0.42, dampingFraction: 0.82)
+    static let bouncy = Animation.spring(response: 0.5, dampingFraction: 0.72)
+}
+
+struct PressableButtonStyle: ButtonStyle {
+    var scale: CGFloat = 0.96
+    var opacity: Double = 1
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? scale : 1)
+            .opacity(configuration.isPressed ? opacity : 1)
+            .animation(MuseSpring.snappy, value: configuration.isPressed)
+    }
+}
+
+struct TypingIndicator: View {
+    @State private var phase: CGFloat = 0
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(0..<3, id: \.self) { index in
+                Circle()
+                    .fill(MuseTheme.inkFaint)
+                    .frame(width: 6, height: 6)
+                    .scaleEffect(0.4 + 0.6 * abs(sin(phase + Double(index) * 0.9)))
+            }
+        }
+        .frame(width: 30, height: 14)
+        .onAppear {
+            withAnimation(.linear(duration: 0.7).repeatForever(autoreverses: false)) {
+                phase = .pi * 2
+            }
+        }
+        .accessibilityLabel("Thinking")
+    }
+}
+
+struct StreamingText: View {
+    let full: String
+    @State private var shown = 0
+    @State private var task: Task<Void, Never>?
+
+    var body: some View {
+        Text(String(full.prefix(shown)))
+            .onAppear { start() }
+            .onChange(of: full) { _ in
+                shown = 0
+                start()
+            }
+            .onDisappear { task?.cancel() }
+    }
+
+    private func start() {
+        task?.cancel()
+        shown = 0
+        let total = full.count
+        guard total > 0 else { return }
+        task = Task {
+            let step = max(1, total / 220)
+            var i = 0
+            while i < total {
+                try? await Task.sleep(nanoseconds: 12_000_000)
+                if Task.isCancelled { return }
+                i = min(total, i + step)
+                await MainActor.run { shown = i }
+            }
+        }
+    }
+}
+
+extension View {
+    func pressable(scale: CGFloat = 0.96) -> some View {
+        buttonStyle(PressableButtonStyle(scale: scale))
+    }
+}

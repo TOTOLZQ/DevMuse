@@ -15,6 +15,7 @@ struct CanvasBoardView: View {
     @State private var draggingID: UUID?
     @State private var dragTranslation: CGSize = .zero
     @State private var editorRoute: CardEditorRoute?
+    @State private var appeared = false
 
     private let cardWidth: CGFloat = 208
 
@@ -40,6 +41,9 @@ struct CanvasBoardView: View {
                 }
             }
             .clipped()
+            .onAppear {
+                withAnimation(MuseSpring.soft) { appeared = true }
+            }
             .overlay(alignment: .bottomTrailing) {
                 MusePrimaryButton(title: "New note", symbol: "plus") {
                     addCard(in: proxy.size)
@@ -170,16 +174,25 @@ struct CanvasBoardView: View {
     }
 
     private func cardNode(_ card: NoteCard) -> some View {
-        NoteCardView(card: card, isDragging: draggingID == card.id, width: cardWidth)
-            .scaleEffect(zoom)
+        let isDragging = draggingID == card.id
+        let index = store.cards.firstIndex(where: { $0.id == card.id }) ?? 0
+        return NoteCardView(card: card, isDragging: isDragging, width: cardWidth)
+            .scaleEffect(zoom * (isDragging ? 1.06 : 1))
             .position(
                 x: CGFloat(card.x) * zoom + pan.width,
                 y: CGFloat(card.y) * zoom + pan.height
             )
             .offset(
-                x: draggingID == card.id ? dragTranslation.width : 0,
-                y: draggingID == card.id ? dragTranslation.height : 0
+                x: isDragging ? dragTranslation.width : 0,
+                y: isDragging ? dragTranslation.height : 0
             )
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 14)
+            .animation(
+                MuseSpring.soft.delay(Double(index) * 0.04),
+                value: appeared
+            )
+            .animation(MuseSpring.snappy, value: isDragging)
             .gesture(cardGesture(card))
             .onTapGesture {
                 editorRoute = CardEditorRoute(card: card, isNew: false)
@@ -208,8 +221,16 @@ struct CanvasBoardView: View {
                     height: anchorPan.height + value.translation.height
                 )
             }
-            .onEnded { _ in
-                anchorPan = pan
+            .onEnded { value in
+                let predicted = value.predictedEndTranslation
+                let target = CGSize(
+                    width: anchorPan.width + predicted.width,
+                    height: anchorPan.height + predicted.height
+                )
+                withAnimation(.easeOut(duration: 0.45)) {
+                    pan = target
+                }
+                anchorPan = target
             }
     }
 

@@ -43,6 +43,18 @@ enum AppAppearance: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+enum AgentRole: String, Codable {
+    case user
+    case assistant
+}
+
+struct AgentMessage: Identifiable, Codable, Equatable {
+    var id: UUID = UUID()
+    var role: AgentRole
+    var content: String
+    var createdAt: Date = Date()
+}
+
 enum SeedData {
     static var cards: [NoteCard] {
         [
@@ -193,6 +205,17 @@ enum SeedData {
                 Act as a release manager. Given this build, produce a checklist that
                 covers versioning, signing, permissions, crash reporting, offline
                 behavior, and rollback. Flag anything that blocks a store submission.
+                """
+            )
+        ]
+    }
+
+    static var messages: [AgentMessage] {
+        [
+            AgentMessage(
+                role: .assistant,
+                content: """
+                Hi, I am your development copilot. Ask me to review a diff, refactor a snippet, explain a concept, plan tests, or draft a release checklist. I run entirely on device.
                 """
             )
         ]
