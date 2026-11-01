@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: [ main, master ]
+    tags: [ 'v*' ]
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -53,3 +57,17 @@ jobs:
           path: build/MuseDev-unsigned.ipa
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'latest' }}
+          name: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'Muse Dev latest unsigned build' }}
+          body: |
+            Unsigned arm64 IPA for iOS 16+.
+
+            Re-sign with your own certificate and provisioning profile before installing.
+          files: build/MuseDev-unsigned.ipa
+          prerelease: false
+          make_latest: true
+          fail_on_unmatched_files: true
