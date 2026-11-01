@@ -74,10 +74,10 @@ enum MuseFont {
 extension CardKind {
     var label: String {
         switch self {
-        case .idea: return "Idea"
-        case .question: return "Question"
-        case .reference: return "Reference"
-        case .task: return "Task"
+        case .idea: return "想法"
+        case .question: return "疑问"
+        case .reference: return "参考"
+        case .task: return "任务"
         }
     }
 
@@ -103,9 +103,9 @@ extension CardKind {
 extension AppAppearance {
     var title: String {
         switch self {
-        case .paper: return "Paper"
-        case .ink: return "Ink"
-        case .system: return "System"
+        case .paper: return "暖纸"
+        case .ink: return "墨色"
+        case .system: return "跟随系统"
         }
     }
 
@@ -262,7 +262,7 @@ struct MuseSearchField: View {
                         .foregroundColor(MuseTheme.inkFaint)
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Clear search")
+                .accessibilityLabel("清除搜索")
             }
         }
         .padding(.horizontal, 14)
@@ -297,7 +297,7 @@ struct MuseCopyButton: View {
             HStack(spacing: 6) {
                 Image(systemName: copied ? "checkmark" : "doc.on.doc")
                     .font(.system(size: 11, weight: .semibold))
-                Text(copied ? "Copied" : "Copy")
+                Text(copied ? "已复制" : "复制")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(1.2)
             }
@@ -314,7 +314,7 @@ struct MuseCopyButton: View {
             )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(copied ? "Copied" : "Copy to clipboard")
+        .accessibilityLabel(copied ? "已复制" : "复制到剪贴板")
     }
 }
 
@@ -375,7 +375,7 @@ struct TypingIndicator: View {
                 phase = .pi * 2
             }
         }
-        .accessibilityLabel("Thinking")
+        .accessibilityLabel("思考中")
     }
 }
 

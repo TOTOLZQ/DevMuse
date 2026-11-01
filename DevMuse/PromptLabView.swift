@@ -55,17 +55,17 @@ struct PromptLabView: View {
                                     Button {
                                         editorRoute = PromptEditorRoute(prompt: prompt, isNew: false)
                                     } label: {
-                                        Label("Edit", systemImage: "pencil")
+                                        Label("编辑", systemImage: "pencil")
                                     }
                                     Button {
                                         UIPasteboard.general.string = prompt.body
                                     } label: {
-                                        Label("Copy prompt", systemImage: "doc.on.doc")
+                                        Label("复制提示词", systemImage: "doc.on.doc")
                                     }
                                     Button(role: .destructive) {
                                         store.deletePrompt(prompt.id)
                                     } label: {
-                                        Label("Delete", systemImage: "trash")
+                                        Label("删除", systemImage: "trash")
                                     }
                                 }
                             }
@@ -102,14 +102,14 @@ struct PromptLabView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 8) {
-                Text("PROMPTS")
+                Text("提示词")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
                 Spacer()
                 Button {
                     editorRoute = PromptEditorRoute(
-                        prompt: PromptIdea(title: "", category: "Review", body: ""),
+                        prompt: PromptIdea(title: "", category: "审查", body: ""),
                         isNew: true
                     )
                 } label: {
@@ -120,14 +120,14 @@ struct PromptLabView: View {
                         .background(Circle().fill(MuseTheme.ink))
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("New prompt")
+                .accessibilityLabel("新建提示词")
             }
 
-            Text("Prompt Lab")
+            Text("提示词实验室")
                 .font(MuseFont.serif(30, .semibold))
                 .foregroundColor(MuseTheme.ink)
 
-            Text("Reusable instructions for reviews, refactors and releases.")
+            Text("可复用的指令，用于审查、重构与发布。")
                 .font(MuseFont.sans(13))
                 .foregroundColor(MuseTheme.inkSoft)
 
@@ -139,10 +139,10 @@ struct PromptLabView: View {
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("No prompts yet")
+            Text("还没有提示词")
                 .font(MuseFont.serif(20, .semibold))
                 .foregroundColor(MuseTheme.ink)
-            Text("Write the instructions you repeat, then reuse them.")
+            Text("写下你反复使用的指令，然后复用它们。")
                 .font(MuseFont.sans(13))
                 .foregroundColor(MuseTheme.inkSoft)
         }
@@ -162,7 +162,7 @@ struct PromptCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(prompt.title.isEmpty ? "Untitled prompt" : prompt.title)
+            Text(prompt.title.isEmpty ? "未命名提示词" : prompt.title)
                 .font(MuseFont.serif(19, .semibold))
                 .foregroundColor(MuseTheme.ink)
                 .multilineTextAlignment(.leading)
@@ -177,7 +177,7 @@ struct PromptCard: View {
             HStack(spacing: 6) {
                 Image(systemName: "text.quote")
                     .font(.system(size: 9, weight: .semibold))
-                Text(prompt.body.count.description + " CHARS")
+                Text(prompt.body.count.description + " 字")
                     .font(MuseFont.mono(9, .medium))
                     .tracking(1)
             }
@@ -187,7 +187,7 @@ struct PromptCard: View {
         .museCard(padding: 16)
         .contentShape(Rectangle())
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(prompt.title), \(prompt.category) prompt")
+        .accessibilityLabel("\(prompt.title)，\(prompt.category) 提示词")
     }
 }
 
@@ -208,10 +208,10 @@ struct PromptDetailView: View {
                 content(prompt)
             } else {
                 VStack(spacing: 8) {
-                    Text("This prompt is gone")
+                    Text("此提示词已不存在")
                         .font(MuseFont.serif(22, .semibold))
                         .foregroundColor(MuseTheme.ink)
-                    Text("It was deleted from the lab.")
+                    Text("它已从实验室中删除。")
                         .font(MuseFont.sans(13))
                         .foregroundColor(MuseTheme.inkSoft)
                 }
@@ -219,7 +219,7 @@ struct PromptDetailView: View {
             }
         }
         .background(MuseTheme.paper.ignoresSafeArea())
-        .navigationTitle("Prompt")
+        .navigationTitle("提示词")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
@@ -227,7 +227,7 @@ struct PromptDetailView: View {
                 Button {
                     editing = true
                 } label: {
-                    Text("Edit")
+                    Text("编辑")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.rust)
                 }
@@ -248,14 +248,14 @@ struct PromptDetailView: View {
                 )
             }
         }
-        .alert("Delete prompt?", isPresented: $confirmingDelete) {
-            Button("Delete", role: .destructive) {
+        .alert("删除提示词？", isPresented: $confirmingDelete) {
+            Button("删除", role: .destructive) {
                 store.deletePrompt(promptID)
                 dismiss()
             }
-            Button("Cancel", role: .cancel) { }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text("This removes it from the lab on this device.")
+            Text("这会把它从本设备的实验室中移除。")
         }
     }
 
@@ -268,14 +268,14 @@ struct PromptDetailView: View {
                     MuseCopyButton(text: prompt.body)
                 }
 
-                Text(prompt.title.isEmpty ? "Untitled prompt" : prompt.title)
+                Text(prompt.title.isEmpty ? "未命名提示词" : prompt.title)
                     .font(MuseFont.serif(28, .semibold))
                     .foregroundColor(MuseTheme.ink)
                     .fixedSize(horizontal: false, vertical: true)
 
                 MuseHairline()
 
-                Text(prompt.body.isEmpty ? "No instructions yet." : prompt.body)
+                Text(prompt.body.isEmpty ? "还没有指令。" : prompt.body)
                     .font(MuseFont.serif(16))
                     .foregroundColor(MuseTheme.ink)
                     .lineSpacing(5)
@@ -299,7 +299,7 @@ struct PromptDetailView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "trash")
                                 .font(.system(size: 11, weight: .semibold))
-                            Text("Delete")
+                            Text("删除")
                                 .font(MuseFont.sans(12, .semibold))
                         }
                         .foregroundColor(MuseTheme.rust)
@@ -323,7 +323,7 @@ struct PromptEditorSheet: View {
     @State private var category: String
     @State private var bodyText: String
 
-    private let categories = ["Review", "Refactor", "Writing", "Ship"]
+    private let categories = ["审查", "重构", "写作", "发布"]
 
     init(
         prompt: PromptIdea,
@@ -343,19 +343,19 @@ struct PromptEditorSheet: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(isNew ? "NEW PROMPT" : "EDIT PROMPT")
+                Text(isNew ? "新建提示词" : "编辑提示词")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
 
-                Text(isNew ? "Write an instruction" : "Refine the instruction")
+                Text(isNew ? "写下一条指令" : "完善这条指令")
                     .font(MuseFont.serif(28, .semibold))
                     .foregroundColor(MuseTheme.ink)
 
                 MuseHairline()
 
-                MuseSectionLabel(text: "Title")
-                TextField("What is it for?", text: $title)
+                MuseSectionLabel(text: "标题")
+                TextField("用途是什么？", text: $title)
                     .font(MuseFont.serif(18, .semibold))
                     .foregroundColor(MuseTheme.ink)
                     .padding(.horizontal, 14)
@@ -363,8 +363,8 @@ struct PromptEditorSheet: View {
                     .background(fieldBackground)
                     .overlay(fieldBorder)
 
-                MuseSectionLabel(text: "Category")
-                TextField("Category", text: $category)
+                MuseSectionLabel(text: "分类")
+                TextField("分类", text: $category)
                     .font(MuseFont.sans(14))
                     .foregroundColor(MuseTheme.ink)
                     .textInputAutocapitalization(.words)
@@ -388,7 +388,7 @@ struct PromptEditorSheet: View {
                     .padding(.vertical, 2)
                 }
 
-                MuseSectionLabel(text: "Instructions")
+                MuseSectionLabel(text: "指令内容")
                 TextEditor(text: $bodyText)
                     .font(MuseFont.serif(15))
                     .foregroundColor(MuseTheme.ink)
@@ -406,7 +406,7 @@ struct PromptEditorSheet: View {
                         HStack(spacing: 6) {
                             Image(systemName: "trash")
                                 .font(.system(size: 12, weight: .semibold))
-                            Text("Delete prompt")
+                            Text("删除提示词")
                                 .font(MuseFont.sans(13, .semibold))
                         }
                         .foregroundColor(MuseTheme.rust)
@@ -425,7 +425,7 @@ struct PromptEditorSheet: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("Cancel")
+                    Text("取消")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.inkSoft)
                         .padding(.vertical, 13)
@@ -444,7 +444,7 @@ struct PromptEditorSheet: View {
                 Button {
                     save()
                 } label: {
-                    Text(isNew ? "Save prompt" : "Save")
+                    Text(isNew ? "保存提示词" : "保存")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.paper)
                         .padding(.vertical, 13)
@@ -476,7 +476,7 @@ struct PromptEditorSheet: View {
         var updated = prompt
         updated.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanedCategory = category.trimmingCharacters(in: .whitespacesAndNewlines)
-        updated.category = cleanedCategory.isEmpty ? "General" : cleanedCategory
+        updated.category = cleanedCategory.isEmpty ? "通用" : cleanedCategory
         updated.body = bodyText.trimmingCharacters(in: .whitespacesAndNewlines)
         onSave(updated)
         dismiss()

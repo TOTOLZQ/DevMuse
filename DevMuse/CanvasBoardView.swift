@@ -45,7 +45,7 @@ struct CanvasBoardView: View {
                 withAnimation(MuseSpring.soft) { appeared = true }
             }
             .overlay(alignment: .bottomTrailing) {
-                MusePrimaryButton(title: "New note", symbol: "plus") {
+                MusePrimaryButton(title: "新建笔记", symbol: "plus") {
                     addCard(in: proxy.size)
                 }
                 .padding(.trailing, 20)
@@ -84,17 +84,17 @@ struct CanvasBoardView: View {
     private var topBar: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 8) {
-                Text("BOARD")
+                Text("画布")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
                 Spacer()
-                Text("\(store.cards.count) NOTES")
+                Text("\(store.cards.count) 条笔记")
                     .font(MuseFont.mono(10, .medium))
                     .tracking(1.2)
                     .foregroundColor(MuseTheme.inkFaint)
             }
-            Text("Thinking Canvas")
+            Text("思考画布")
                 .font(MuseFont.serif(27, .semibold))
                 .foregroundColor(MuseTheme.ink)
             MuseHairline()
@@ -108,10 +108,10 @@ struct CanvasBoardView: View {
 
     private var emptyState: some View {
         VStack(spacing: 10) {
-            Text("A blank canvas")
+            Text("空白画布")
                 .font(MuseFont.serif(23, .semibold))
                 .foregroundColor(MuseTheme.ink)
-            Text("Tap New note to drop your first thought.")
+            Text("点新建笔记，放下第一个想法。")
                 .font(MuseFont.sans(13))
                 .foregroundColor(MuseTheme.inkSoft)
         }
@@ -128,7 +128,7 @@ struct CanvasBoardView: View {
                 Image(systemName: "minus")
                     .font(.system(size: 11, weight: .semibold))
             }
-            .accessibilityLabel("Zoom out")
+            .accessibilityLabel("缩小")
 
             Text("\(Int(zoom * 100))%")
                 .font(MuseFont.mono(10, .medium))
@@ -140,7 +140,7 @@ struct CanvasBoardView: View {
                 Image(systemName: "plus")
                     .font(.system(size: 11, weight: .semibold))
             }
-            .accessibilityLabel("Zoom in")
+            .accessibilityLabel("放大")
 
             Rectangle()
                 .fill(MuseTheme.hairline)
@@ -157,7 +157,7 @@ struct CanvasBoardView: View {
                 Image(systemName: "arrow.counterclockwise")
                     .font(.system(size: 11, weight: .semibold))
             }
-            .accessibilityLabel("Reset view")
+            .accessibilityLabel("重置视图")
         }
         .foregroundColor(MuseTheme.inkSoft)
         .padding(.horizontal, 14)
@@ -201,16 +201,16 @@ struct CanvasBoardView: View {
                 Button {
                     editorRoute = CardEditorRoute(card: card, isNew: false)
                 } label: {
-                    Label("Edit", systemImage: "pencil")
+                    Label("编辑", systemImage: "pencil")
                 }
                 Button(role: .destructive) {
                     store.deleteCard(card.id)
                 } label: {
-                    Label("Delete", systemImage: "trash")
+                    Label("删除", systemImage: "trash")
                 }
             }
             .accessibilityElement(children: .combine)
-            .accessibilityLabel("\(card.kind.label): \(card.title)")
+            .accessibilityLabel("\(card.kind.label)：\(card.title)")
     }
 
     private var panGesture: some Gesture {
@@ -308,14 +308,14 @@ struct NoteCardView: View {
             HStack(spacing: 6) {
                 Image(systemName: card.kind.symbol)
                     .font(.system(size: 11, weight: .semibold))
-                Text(card.kind.label.uppercased())
+                Text(card.kind.label)
                     .font(MuseFont.mono(9, .semibold))
                     .tracking(1.2)
                 Spacer(minLength: 0)
             }
             .foregroundColor(card.kind.tint)
 
-            Text(card.title.isEmpty ? "Untitled" : card.title)
+            Text(card.title.isEmpty ? "未命名" : card.title)
                 .font(MuseFont.serif(19, .semibold))
                 .foregroundColor(MuseTheme.ink)
                 .multilineTextAlignment(.leading)

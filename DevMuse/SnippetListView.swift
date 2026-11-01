@@ -40,7 +40,7 @@ struct SnippetListView: View {
                         Button {
                             activeLanguage = nil
                         } label: {
-                            MuseChip(text: "All", selected: activeLanguage == nil)
+                            MuseChip(text: "全部", selected: activeLanguage == nil)
                         }
                         .buttonStyle(.plain)
 
@@ -70,17 +70,17 @@ struct SnippetListView: View {
                             Button {
                                 editorRoute = SnippetEditorRoute(snippet: snippet, isNew: false)
                             } label: {
-                                Label("Edit", systemImage: "pencil")
+                                Label("编辑", systemImage: "pencil")
                             }
                             Button {
                                 UIPasteboard.general.string = snippet.code
                             } label: {
-                                Label("Copy code", systemImage: "doc.on.doc")
+                                Label("复制代码", systemImage: "doc.on.doc")
                             }
                             Button(role: .destructive) {
                                 store.deleteSnippet(snippet.id)
                             } label: {
-                                Label("Delete", systemImage: "trash")
+                                Label("删除", systemImage: "trash")
                             }
                         }
                     }
@@ -115,7 +115,7 @@ struct SnippetListView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 8) {
-                Text("VAULT")
+                Text("代码库")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
@@ -133,18 +133,18 @@ struct SnippetListView: View {
                         .background(Circle().fill(MuseTheme.ink))
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("New snippet")
+                .accessibilityLabel("新建片段")
             }
 
-            Text("Snippet Vault")
+            Text("代码库")
                 .font(MuseFont.serif(30, .semibold))
                 .foregroundColor(MuseTheme.ink)
 
-            Text("Code you keep reaching for, one tap away.")
+            Text("反复要用的代码，一触即达。")
                 .font(MuseFont.sans(13))
                 .foregroundColor(MuseTheme.inkSoft)
 
-            MuseSearchField(text: $query, placeholder: "Search title, code or tag")
+            MuseSearchField(text: $query, placeholder: "搜索标题、代码或标签")
                 .padding(.top, 2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -152,10 +152,10 @@ struct SnippetListView: View {
 
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(query.isEmpty ? "Nothing saved yet" : "No matches")
+            Text(query.isEmpty ? "还没有保存内容" : "没有匹配结果")
                 .font(MuseFont.serif(20, .semibold))
                 .foregroundColor(MuseTheme.ink)
-            Text(query.isEmpty ? "Save the commands you retype the most." : "Try another keyword or clear the filter.")
+            Text(query.isEmpty ? "把你反复敲的命令存下来。" : "换个关键词或清除筛选。")
                 .font(MuseFont.sans(13))
                 .foregroundColor(MuseTheme.inkSoft)
         }
@@ -192,7 +192,7 @@ struct SnippetRow: View {
                     .foregroundColor(MuseTheme.inkFaint)
             }
 
-            Text(snippet.title.isEmpty ? "Untitled snippet" : snippet.title)
+            Text(snippet.title.isEmpty ? "未命名片段" : snippet.title)
                 .font(MuseFont.serif(19, .semibold))
                 .foregroundColor(MuseTheme.ink)
                 .multilineTextAlignment(.leading)

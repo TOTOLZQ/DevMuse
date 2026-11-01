@@ -9,11 +9,11 @@ struct AgentView: View {
     @FocusState private var focused: Bool
 
     private let quickPrompts = [
-        "Review this diff",
-        "Refactor this snippet",
-        "Plan the tests",
-        "Write a commit message",
-        "Draft the release checklist"
+        "帮我审查这段代码",
+        "重构这段代码",
+        "规划测试用例",
+        "写一条提交信息",
+        "列出发版检查清单"
     ]
 
     var body: some View {
@@ -67,7 +67,7 @@ struct AgentView: View {
     private var topBar: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 8) {
-                Text("AGENT")
+                Text("助手")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
@@ -83,9 +83,9 @@ struct AgentView: View {
                         .foregroundColor(MuseTheme.inkSoft)
                 }
                 .pressable()
-                .accessibilityLabel("Clear conversation")
+                .accessibilityLabel("清空对话")
             }
-            Text("Development Copilot")
+            Text("开发助手")
                 .font(MuseFont.serif(27, .semibold))
                 .foregroundColor(MuseTheme.ink)
             MuseHairline()
@@ -101,7 +101,7 @@ struct AgentView: View {
         HStack {
             assistantAvatar
             VStack(alignment: .leading, spacing: 6) {
-                Text("thinking")
+                Text("思考中")
                     .font(MuseFont.mono(9, .semibold))
                     .tracking(1.2)
                     .foregroundColor(MuseTheme.inkFaint)
@@ -152,7 +152,7 @@ struct AgentView: View {
 
     private var inputBar: some View {
         HStack(spacing: 10) {
-            TextField("Ask me anything about your code", text: $input)
+            TextField("问问你的代码", text: $input)
                 .font(MuseFont.sans(15))
                 .foregroundColor(MuseTheme.ink)
                 .focused($focused)
@@ -178,7 +178,7 @@ struct AgentView: View {
             }
             .pressable(scale: 0.9)
             .disabled(input.trimmingCharacters(in: .whitespaces).isEmpty || isThinking)
-            .accessibilityLabel("Send message")
+            .accessibilityLabel("发送")
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
@@ -226,7 +226,7 @@ struct AgentView: View {
                     Button {
                         UIPasteboard.general.string = message.content
                     } label: {
-                        Label("Copy", systemImage: "doc.on.doc")
+                        Label("复制", systemImage: "doc.on.doc")
                     }
                 }
                 Spacer(minLength: 40)
@@ -244,7 +244,7 @@ struct AgentView: View {
                         Button {
                             UIPasteboard.general.string = message.content
                         } label: {
-                            Label("Copy", systemImage: "doc.on.doc")
+                            Label("复制", systemImage: "doc.on.doc")
                         }
                     }
             }

@@ -29,18 +29,18 @@ struct CardEditorSheet: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(isNew ? "NEW NOTE" : "EDIT NOTE")
+                Text(isNew ? "新建笔记" : "编辑笔记")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
 
-                Text(isNew ? "Drop a thought" : "Refine the thought")
+                Text(isNew ? "写下一个想法" : "打磨这个想法")
                     .font(MuseFont.serif(28, .semibold))
                     .foregroundColor(MuseTheme.ink)
 
                 MuseHairline()
 
-                MuseSectionLabel(text: "Kind")
+                MuseSectionLabel(text: "类型")
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
                         ForEach(CardKind.allCases) { value in
@@ -55,8 +55,8 @@ struct CardEditorSheet: View {
                     .padding(.vertical, 2)
                 }
 
-                MuseSectionLabel(text: "Title")
-                TextField("One clear line", text: $title)
+                MuseSectionLabel(text: "标题")
+                TextField("一句话说清", text: $title)
                     .font(MuseFont.serif(19, .semibold))
                     .foregroundColor(MuseTheme.ink)
                     .padding(.horizontal, 14)
@@ -70,7 +70,7 @@ struct CardEditorSheet: View {
                             .strokeBorder(MuseTheme.hairline, lineWidth: 1)
                     )
 
-                MuseSectionLabel(text: "Detail")
+                MuseSectionLabel(text: "详情")
                 TextEditor(text: $bodyText)
                     .font(MuseFont.sans(14))
                     .foregroundColor(MuseTheme.ink)
@@ -94,7 +94,7 @@ struct CardEditorSheet: View {
                         HStack(spacing: 6) {
                             Image(systemName: "trash")
                                 .font(.system(size: 12, weight: .semibold))
-                            Text("Delete note")
+                            Text("删除笔记")
                                 .font(MuseFont.sans(13, .semibold))
                         }
                         .foregroundColor(MuseTheme.rust)
@@ -113,7 +113,7 @@ struct CardEditorSheet: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("Cancel")
+                    Text("取消")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.inkSoft)
                         .padding(.vertical, 13)
@@ -132,7 +132,7 @@ struct CardEditorSheet: View {
                 Button {
                     save()
                 } label: {
-                    Text(isNew ? "Add to canvas" : "Save")
+                    Text(isNew ? "放到画布" : "保存")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.paper)
                         .padding(.vertical, 13)

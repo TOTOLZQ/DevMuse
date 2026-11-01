@@ -10,7 +10,7 @@ struct RootView: View {
                 AgentView()
             }
             .tabItem {
-                Label("Agent", systemImage: "sparkles")
+                Label("助手", systemImage: "sparkles")
             }
             .tag(0)
 
@@ -18,7 +18,7 @@ struct RootView: View {
                 CanvasBoardView()
             }
             .tabItem {
-                Label("Board", systemImage: "square.grid.2x2")
+                Label("画布", systemImage: "square.grid.2x2")
             }
             .tag(1)
 
@@ -26,7 +26,7 @@ struct RootView: View {
                 SnippetListView()
             }
             .tabItem {
-                Label("Vault", systemImage: "curlybraces")
+                Label("代码库", systemImage: "curlybraces")
             }
             .tag(2)
 
@@ -34,7 +34,7 @@ struct RootView: View {
                 PromptLabView()
             }
             .tabItem {
-                Label("Prompts", systemImage: "text.quote")
+                Label("提示词", systemImage: "text.quote")
             }
             .tag(3)
 
@@ -42,7 +42,7 @@ struct RootView: View {
                 SettingsView()
             }
             .tabItem {
-                Label("Studio", systemImage: "slider.horizontal.3")
+                Label("设置", systemImage: "slider.horizontal.3")
             }
             .tag(4)
         }

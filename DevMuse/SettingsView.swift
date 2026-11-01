@@ -20,28 +20,28 @@ struct SettingsView: View {
         }
         .background(MuseTheme.paper.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
-        .alert("Reset all data?", isPresented: $confirmingReset) {
-            Button("Reset", role: .destructive) {
+        .alert("重置全部数据？", isPresented: $confirmingReset) {
+            Button("重置", role: .destructive) {
                 store.resetAll()
             }
-            Button("Cancel", role: .cancel) { }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text("Notes, snippets and prompts return to the starter set on this device.")
+            Text("本设备上的笔记、片段与提示词将恢复为初始内容。")
         }
     }
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("STUDIO")
+            Text("设置")
                 .font(MuseFont.mono(10, .semibold))
                 .tracking(2.4)
                 .foregroundColor(MuseTheme.inkFaint)
 
-            Text("Studio")
+            Text("设置")
                 .font(MuseFont.serif(30, .semibold))
                 .foregroundColor(MuseTheme.ink)
 
-            Text("Tune the look, check your library, and ship a build.")
+            Text("调整外观、查看资料库，并发布构建。")
                 .font(MuseFont.sans(13))
                 .foregroundColor(MuseTheme.inkSoft)
 
@@ -53,7 +53,7 @@ struct SettingsView: View {
 
     private var appearanceSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            MuseSectionLabel(text: "Appearance")
+            MuseSectionLabel(text: "外观")
 
             VStack(spacing: 0) {
                 ForEach(AppAppearance.allCases) { value in
@@ -113,12 +113,12 @@ struct SettingsView: View {
 
     private var librarySection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            MuseSectionLabel(text: "Library")
+            MuseSectionLabel(text: "资料库")
 
             HStack(spacing: 12) {
-                statBlock(value: store.cards.count, title: "Notes")
-                statBlock(value: store.snippets.count, title: "Snippets")
-                statBlock(value: store.prompts.count, title: "Prompts")
+                statBlock(value: store.cards.count, title: "笔记")
+                statBlock(value: store.snippets.count, title: "片段")
+                statBlock(value: store.prompts.count, title: "提示词")
             }
         }
     }
@@ -141,16 +141,16 @@ struct SettingsView: View {
 
     private var pipelineSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            MuseSectionLabel(text: "Release")
+            MuseSectionLabel(text: "发布")
 
             VStack(alignment: .leading, spacing: 12) {
-                Text("How this build becomes an IPA")
+                Text("这个构建如何成为 IPA")
                     .font(MuseFont.serif(18, .semibold))
                     .foregroundColor(MuseTheme.ink)
 
-                pipelineStep(index: "1", text: "Push this repository to GitHub.")
-                pipelineStep(index: "2", text: "Run the Build unsigned IPA workflow.")
-                pipelineStep(index: "3", text: "Download the artifact and re-sign with your own signing tool.")
+                pipelineStep(index: "1", text: "把这个仓库推送到 GitHub。")
+                pipelineStep(index: "2", text: "运行 Build unsigned IPA 工作流。")
+                pipelineStep(index: "3", text: "下载产物，用你自己的签名工具重签。")
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .museCard(padding: 16)
@@ -176,7 +176,7 @@ struct SettingsView: View {
 
     private var resetSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            MuseSectionLabel(text: "Data")
+            MuseSectionLabel(text: "数据")
 
             Button {
                 confirmingReset = true
@@ -184,7 +184,7 @@ struct SettingsView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "arrow.counterclockwise")
                         .font(.system(size: 12, weight: .semibold))
-                    Text("Reset to starter content")
+                    Text("重置为初始内容")
                         .font(MuseFont.sans(14, .semibold))
                     Spacer()
                     Image(systemName: "chevron.right")
@@ -210,10 +210,10 @@ struct SettingsView: View {
     private var footer: some View {
         VStack(alignment: .leading, spacing: 4) {
             MuseHairline()
-            Text("Muse Dev 1.0")
+            Text("开发助手 1.0")
                 .font(MuseFont.mono(10, .medium))
                 .foregroundColor(MuseTheme.inkFaint)
-            Text("Local-first. No accounts, no network calls.")
+            Text("本地优先。无需账号，无网络请求。")
                 .font(MuseFont.sans(11))
                 .foregroundColor(MuseTheme.inkFaint)
         }

@@ -18,10 +18,10 @@ struct SnippetDetailView: View {
                 content(snippet)
             } else {
                 VStack(spacing: 8) {
-                    Text("This snippet is gone")
+                    Text("这个片段已不存在")
                         .font(MuseFont.serif(22, .semibold))
                         .foregroundColor(MuseTheme.ink)
-                    Text("It was deleted from the vault.")
+                    Text("它已从代码库中删除。")
                         .font(MuseFont.sans(13))
                         .foregroundColor(MuseTheme.inkSoft)
                 }
@@ -29,7 +29,7 @@ struct SnippetDetailView: View {
             }
         }
         .background(MuseTheme.paper.ignoresSafeArea())
-        .navigationTitle("Snippet")
+        .navigationTitle("片段")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.visible, for: .navigationBar)
         .toolbar {
@@ -37,7 +37,7 @@ struct SnippetDetailView: View {
                 Button {
                     editing = true
                 } label: {
-                    Text("Edit")
+                    Text("编辑")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.rust)
                 }
@@ -58,14 +58,14 @@ struct SnippetDetailView: View {
                 )
             }
         }
-        .alert("Delete snippet?", isPresented: $confirmingDelete) {
-            Button("Delete", role: .destructive) {
+        .alert("删除片段？", isPresented: $confirmingDelete) {
+            Button("删除", role: .destructive) {
                 store.deleteSnippet(snippetID)
                 dismiss()
             }
-            Button("Cancel", role: .cancel) { }
+            Button("取消", role: .cancel) { }
         } message: {
-            Text("This removes it from the vault on this device.")
+            Text("这会从本机代码库中移除它。")
         }
     }
 
@@ -86,7 +86,7 @@ struct SnippetDetailView: View {
                     MuseCopyButton(text: snippet.code)
                 }
 
-                Text(snippet.title.isEmpty ? "Untitled snippet" : snippet.title)
+                Text(snippet.title.isEmpty ? "未命名片段" : snippet.title)
                     .font(MuseFont.serif(28, .semibold))
                     .foregroundColor(MuseTheme.ink)
                     .fixedSize(horizontal: false, vertical: true)
@@ -104,7 +104,7 @@ struct SnippetDetailView: View {
                 MuseHairline()
 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    Text(snippet.code.isEmpty ? "No code yet." : snippet.code)
+                    Text(snippet.code.isEmpty ? "还没有代码。" : snippet.code)
                         .font(MuseFont.mono(12.5))
                         .foregroundColor(MuseTheme.ink)
                         .textSelection(.enabled)
@@ -121,7 +121,7 @@ struct SnippetDetailView: View {
                 )
 
                 HStack(spacing: 10) {
-                    Text("Saved \(snippet.createdAt.formatted(date: .abbreviated, time: .shortened))")
+                    Text("保存于 \(snippet.createdAt.formatted(date: .abbreviated, time: .shortened))")
                         .font(MuseFont.mono(10))
                         .foregroundColor(MuseTheme.inkFaint)
                     Spacer()
@@ -131,7 +131,7 @@ struct SnippetDetailView: View {
                         HStack(spacing: 6) {
                             Image(systemName: "trash")
                                 .font(.system(size: 11, weight: .semibold))
-                            Text("Delete")
+                            Text("删除")
                                 .font(MuseFont.sans(12, .semibold))
                         }
                         .foregroundColor(MuseTheme.rust)
@@ -177,19 +177,19 @@ struct SnippetEditorSheet: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text(isNew ? "NEW SNIPPET" : "EDIT SNIPPET")
+                Text(isNew ? "新建片段" : "编辑片段")
                     .font(MuseFont.mono(10, .semibold))
                     .tracking(2.4)
                     .foregroundColor(MuseTheme.inkFaint)
 
-                Text(isNew ? "Keep a snippet" : "Update the snippet")
+                Text(isNew ? "保存一段代码" : "更新这段代码")
                     .font(MuseFont.serif(28, .semibold))
                     .foregroundColor(MuseTheme.ink)
 
                 MuseHairline()
 
-                MuseSectionLabel(text: "Title")
-                TextField("What does it do?", text: $title)
+                MuseSectionLabel(text: "标题")
+                TextField("它是做什么的？", text: $title)
                     .font(MuseFont.serif(18, .semibold))
                     .foregroundColor(MuseTheme.ink)
                     .padding(.horizontal, 14)
@@ -197,8 +197,8 @@ struct SnippetEditorSheet: View {
                     .background(fieldBackground)
                     .overlay(fieldBorder)
 
-                MuseSectionLabel(text: "Language")
-                TextField("Language", text: $language)
+                MuseSectionLabel(text: "语言")
+                TextField("语言", text: $language)
                     .font(MuseFont.sans(14))
                     .foregroundColor(MuseTheme.ink)
                     .textInputAutocapitalization(.words)
@@ -222,8 +222,8 @@ struct SnippetEditorSheet: View {
                     .padding(.vertical, 2)
                 }
 
-                MuseSectionLabel(text: "Tags")
-                TextField("Comma separated", text: $tagsText)
+                MuseSectionLabel(text: "标签")
+                TextField("用逗号分隔", text: $tagsText)
                     .font(MuseFont.sans(14))
                     .foregroundColor(MuseTheme.ink)
                     .textInputAutocapitalization(.never)
@@ -233,7 +233,7 @@ struct SnippetEditorSheet: View {
                     .background(fieldBackground)
                     .overlay(fieldBorder)
 
-                MuseSectionLabel(text: "Code")
+                MuseSectionLabel(text: "代码")
                 TextEditor(text: $code)
                     .font(MuseFont.mono(12.5))
                     .foregroundColor(MuseTheme.ink)
@@ -253,7 +253,7 @@ struct SnippetEditorSheet: View {
                         HStack(spacing: 6) {
                             Image(systemName: "trash")
                                 .font(.system(size: 12, weight: .semibold))
-                            Text("Delete snippet")
+                            Text("删除片段")
                                 .font(MuseFont.sans(13, .semibold))
                         }
                         .foregroundColor(MuseTheme.rust)
@@ -272,7 +272,7 @@ struct SnippetEditorSheet: View {
                 Button {
                     dismiss()
                 } label: {
-                    Text("Cancel")
+                    Text("取消")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.inkSoft)
                         .padding(.vertical, 13)
@@ -291,7 +291,7 @@ struct SnippetEditorSheet: View {
                 Button {
                     save()
                 } label: {
-                    Text(isNew ? "Save snippet" : "Save")
+                    Text(isNew ? "保存片段" : "保存")
                         .font(MuseFont.sans(14, .semibold))
                         .foregroundColor(MuseTheme.paper)
                         .padding(.vertical, 13)
@@ -323,7 +323,7 @@ struct SnippetEditorSheet: View {
         var updated = snippet
         updated.title = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanedLanguage = language.trimmingCharacters(in: .whitespacesAndNewlines)
-        updated.language = cleanedLanguage.isEmpty ? "Code" : cleanedLanguage
+        updated.language = cleanedLanguage.isEmpty ? "代码" : cleanedLanguage
         updated.code = code
         updated.tags = tagsText
             .split(separator: ",")
